@@ -1,3 +1,36 @@
+
+const maze =
+`
+╔══════════════════╗╔═════════════════════════╗╔════════════╗
+║··················║║·························║║············║
+║O╭─╮·╭╮·╭────╮·╭╮·║║·╭──╮·╭╮·╭─╮·╭╮·╭───╮·╭╮·╚╝·╭───╮·╭──╮O║
+║·╰─╯·││·╰─╮╭─╯·││·╚╝·│╭─╯·││·╰─╯·││·│***│·││····│╭──╯·╰──╯·║
+║·····││···││···││····││···││··O··││·│╭──╯·│╰╮·╭─╯│·········║
+║·╭─╮·│╰─╮·││·╭─╯╰─╮·╭╯│·╭─╯╰─╮·╭─╯│·││····╰─╯·╰╮╭╯·╭╮·╭─╮·╔╝
+║·╰─╯·╰──╯·╰╯·╰────╯·╰─╯·╰────╯·╰──╯·╰╯·╭╮······││··││·│*│·║*
+║·······································│╰─╮·╭╮·││·╭╯│·╰─╯·║*
+║·╭─╮·╭──────────╮·╭╮·╭───╮·╭────────╮ ╭╯**│·││·││·│*│·····║*
+║·╰─╯·╰──────────╯·││·╰──╮│·╰────────╯ ╰───╯·╰╯·╰╯·╰─╯·╭╮·╔╝*
+║··················││····││                ············╰╯·║**
+╚═══╗·╭─────╮·╭────╯│·╭╮·││╭╮ ╭─────╮*╭╮ ╭─────╮·╭───╮····║**
+****║·│*╭─╮*│ │*****│·││·││││ │╭────╯*││ ╰────╮│·│╭──╯·╔══╝**
+════╝·│*╰─╯*│·│*╭─╮*│·││·││││ ││******││      ││·││····╚═════
+     ·│╭────╯·│*│ │*│·││·╰╯││ ││******││ ╭────╯│·││·  ·      
+════╗·││O·····│*╰─╯*│·││··O││ ││******╰╯ │*╭─╮*│·││·╭╮·╔═════
+****║·│╰────╮·│*****│·│╰───╯│ │╰────╮*╭╮ │*╰─╯*│·││·││·╚═══╗*
+╔═══╝·╰─────╯·╰─────╯·╰─────╯ ╰─────╯*╰╯ ╰─────╯·╰╯·╰╯·····║*
+║··············╭────╮······                ············╭─╮·║*
+║·╭─╮·╭╮·╭╮·╭╮·╰─╮╭─╯·╭╮·╭───────╮·╭───────╮·╭╮·╭╮·╭─╮·│*│·║*
+║·│*│·││·││·││···││···││·╰──╮****│·╰───╮╭──╯·││·││·│*│·│*│·║*
+║·╰─╯·││·││·│╰─╮·││·╭─╯│····│****│·····││····││·╰╯·╰╮│·╰─╯·╚╗
+║·····││·╰╯·╰──╯·╰╯·╰──╯·╭╮·╰────╯·╭─╮·││·╭──╯│·····││······║
+║·╭─╮·││·················││········│*│·││·╰───╯·╭─╮·│╰╮·╭─╮·║
+║O│*│·│╰─╮·╭────╮·╔╗·╭───╯╰─╮·╔╗·╭─╯*│·││·······│*│·│*│·│*│O║
+║·╰─╯·╰──╯·╰────╯·║║·╰──────╯·║║·╰───╯·╰╯·╔═══╗·╰─╯·╰─╯·╰─╯·║
+║·················║║··········║║··········║***║·············║
+╚═════════════════╝╚══════════╝╚══════════╝***╚═════════════╝
+`.split('\n').filter(l => l.length > 0).join('\n')
+
 class GameCoordinator {
   constructor() {
     this.gameUi = document.getElementById('game-ui');
@@ -19,39 +52,10 @@ class GameCoordinator {
     this.bottomRow = document.getElementById('bottom-row');
     this.movementButtons = document.getElementById('movement-buttons');
 
-    this.mazeArray = [
-      ['XXXXXXXXXXXXXXXXXXXXXXXXXXXX'],
-      ['XooooooooooooXXooooooooooooX'],
-      ['XoXXXXoXXXXXoXXoXXXXXoXXXXoX'],
-      ['XOXXXXoXXXXXoXXoXXXXXoXXXXOX'],
-      ['XoXXXXoXXXXXoXXoXXXXXoXXXXoX'],
-      ['XooooooooooooooooooooooooooX'],
-      ['XoXXXXoXXoXXXXXXXXoXXoXXXXoX'],
-      ['XoXXXXoXXoXXXXXXXXoXXoXXXXoX'],
-      ['XooooooXXooooXXooooXXooooooX'],
-      ['XXXXXXoXXXXX XX XXXXXoXXXXXX'],
-      ['XXXXXXoXXXXX XX XXXXXoXXXXXX'],
-      ['XXXXXXoXX          XXoXXXXXX'],
-      ['XXXXXXoXX XXXXXXXX XXoXXXXXX'],
-      ['XXXXXXoXX X      X XXoXXXXXX'],
-      ['      o   X      X   o      '],
-      ['XXXXXXoXX X      X XXoXXXXXX'],
-      ['XXXXXXoXX XXXXXXXX XXoXXXXXX'],
-      ['XXXXXXoXX          XXoXXXXXX'],
-      ['XXXXXXoXX XXXXXXXX XXoXXXXXX'],
-      ['XXXXXXoXX XXXXXXXX XXoXXXXXX'],
-      ['XooooooooooooXXooooooooooooX'],
-      ['XoXXXXoXXXXXoXXoXXXXXoXXXXoX'],
-      ['XoXXXXoXXXXXoXXoXXXXXoXXXXoX'],
-      ['XOooXXooooooo  oooooooXXooOX'],
-      ['XXXoXXoXXoXXXXXXXXoXXoXXoXXX'],
-      ['XXXoXXoXXoXXXXXXXXoXXoXXoXXX'],
-      ['XooooooXXooooXXooooXXooooooX'],
-      ['XoXXXXXXXXXXoXXoXXXXXXXXXXoX'],
-      ['XoXXXXXXXXXXoXXoXXXXXXXXXXoX'],
-      ['XooooooooooooooooooooooooooX'],
-      ['XXXXXXXXXXXXXXXXXXXXXXXXXXXX'],
-    ];
+    this.mazeImg.style = 'display:none';
+    this.maze = maze.replace(/[·O]/g, ' ');
+    this.mazeArray = maze.split('\n').filter(l => l.length > 0)
+      .map(l => [l.replace(/[═║╔╗╚╝─│╰╯╭╮*]/g, 'X').replace(/·/g, 'o')]);
 
     this.maxFps = 120;
     this.tileSize = 8;
@@ -287,7 +291,7 @@ class GameCoordinator {
         `${imgBase}text/5000.svg`,
 
         // Maze
-        `${imgBase}maze/maze_blue.svg`,
+        //`${imgBase}maze/maze_blue.svg`,
 
         // Misc
         'app/style/graphics/extra_life.png',
@@ -520,10 +524,12 @@ class GameCoordinator {
    */
   drawMaze(mazeArray, entityList) {
     this.pickups = [this.fruit];
+    const hTiles = mazeArray[0].length;
+    const vTiles = mazeArray.length;
 
-    this.mazeDiv.style.height = `${this.scaledTileSize * 31}px`;
-    this.mazeDiv.style.width = `${this.scaledTileSize * 28}px`;
-    this.gameUi.style.width = `${this.scaledTileSize * 28}px`;
+    this.mazeDiv.style.height = `${this.scaledTileSize * vTiles}px`;
+    this.mazeDiv.style.width = `${this.scaledTileSize * hTiles}px`;
+    this.gameUi.style.width = `${this.scaledTileSize * hTiles}px`;
     this.bottomRow.style.minHeight = `${this.scaledTileSize * 2}px`;
     this.dotContainer = document.getElementById('dot-container');
 
@@ -568,7 +574,7 @@ class GameCoordinator {
       };
 
       // Set this flag to TRUE to see how two-phase collision detection works!
-      const debugging = false;
+      const debugging = true;
 
       this.pickups.forEach((pickup) => {
         pickup.checkPacmanProximity(maxDistance, pacmanCenter, debugging);

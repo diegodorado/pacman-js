@@ -1,3 +1,6 @@
+const ghostHouseX = 34.5;
+const ghostHouseY = 13.5;
+
 class Ghost {
   constructor(
     scaledTileSize, mazeArray, pacman, name, level, characterUtil, blinky,
@@ -126,26 +129,26 @@ class Ghost {
     switch (name) {
       case 'blinky':
         this.defaultPosition = {
-          top: scaledTileSize * 10.5,
-          left: scaledTileSize * 13,
+          top: scaledTileSize * (ghostHouseY - 3),
+          left: scaledTileSize * (ghostHouseX - 0.5),
         };
         break;
       case 'pinky':
         this.defaultPosition = {
-          top: scaledTileSize * 13.5,
-          left: scaledTileSize * 13,
+          top: scaledTileSize * ghostHouseY,
+          left: scaledTileSize * (ghostHouseX - 0.5),
         };
         break;
       case 'inky':
         this.defaultPosition = {
-          top: scaledTileSize * 13.5,
-          left: scaledTileSize * 11,
+          top: scaledTileSize * ghostHouseY,
+          left: scaledTileSize * (ghostHouseX - 2.5),
         };
         break;
       case 'clyde':
         this.defaultPosition = {
-          top: scaledTileSize * 13.5,
-          left: scaledTileSize * 15,
+          top: scaledTileSize * ghostHouseY,
+          left: scaledTileSize * (ghostHouseX + 1.5),
         };
         break;
       default:
@@ -192,10 +195,11 @@ class Ghost {
    * @param {({x: number, y: number})} gridPosition - The current x-y position on the 2D Maze Array
    * @returns {Boolean}
    */
+  //fixme
   isInTunnel(gridPosition) {
     return (
       gridPosition.y === 14
-      && (gridPosition.x < 6 || gridPosition.x > 21)
+      && (gridPosition.x < (6+21) || gridPosition.x > (21+21))
     );
   }
 
@@ -206,8 +210,8 @@ class Ghost {
    */
   isInGhostHouse(gridPosition) {
     return (
-      (gridPosition.x > 9 && gridPosition.x < 18)
-      && (gridPosition.y > 11 && gridPosition.y < 17)
+      (gridPosition.x > (ghostHouseX - 4.5) && gridPosition.x < (ghostHouseX + 4.5))
+      && (gridPosition.y > (ghostHouseY - 2.5)  && gridPosition.y < (ghostHouseY + 2.5))
     );
   }
 
@@ -343,7 +347,7 @@ class Ghost {
   getTarget(name, gridPosition, pacmanGridPosition, mode) {
     // Ghosts return to the ghost-house after eaten
     if (mode === 'eyes') {
-      return { x: 13.5, y: 10 };
+      return { x: ghostHouseX, y: (ghostHouseY - 3.5) };
     }
 
     // Ghosts run from Pacman if scared
@@ -456,24 +460,24 @@ class Ghost {
   handleIdleMovement(elapsedMs, position, velocity) {
     const newPosition = Object.assign({}, this.position);
 
-    if (position.y <= 13.5) {
+    if (position.y <= ghostHouseY) {
       this.direction = this.characterUtil.directions.down;
-    } else if (position.y >= 14.5) {
+    } else if (position.y >= (ghostHouseY + 1) ) {
       this.direction = this.characterUtil.directions.up;
     }
 
     if (this.idleMode === 'leaving') {
-      if (position.x === 13.5 && (position.y > 10.8 && position.y < 11)) {
+      if (position.x === ghostHouseX && (position.y > (ghostHouseY - 2.8) && position.y < (ghostHouseY - 2.5))) {
         this.idleMode = undefined;
-        newPosition.top = this.scaledTileSize * 10.5;
+        newPosition.top = this.scaledTileSize * (ghostHouseY - 3);
         this.direction = this.characterUtil.directions.left;
         window.dispatchEvent(new Event('releaseGhost'));
-      } else if (position.x > 13.4 && position.x < 13.6) {
-        newPosition.left = this.scaledTileSize * 13;
+      } else if (position.x > (ghostHouseX - 0.1) && position.x < (ghostHouseX + 0.1)) {
+        newPosition.left = this.scaledTileSize * (ghostHouseX-0.5);
         this.direction = this.characterUtil.directions.up;
-      } else if (position.y > 13.9 && position.y < 14.1) {
-        newPosition.top = this.scaledTileSize * 13.5;
-        this.direction = (position.x < 13.5)
+      } else if (position.y > (ghostHouseY + 0.4) && position.y < (ghostHouseY + 0.6)) {
+        newPosition.top = this.scaledTileSize * ghostHouseY;
+        this.direction = (position.x < ghostHouseX)
           ? this.characterUtil.directions.right
           : this.characterUtil.directions.left;
       }
@@ -522,8 +526,9 @@ class Ghost {
   enteringGhostHouse(mode, position) {
     return (
       mode === 'eyes'
-      && position.y === 11
-      && (position.x > 13.4 && position.x < 13.6)
+      //&& position.y === (ghostHouseY - 2.5)
+      && position.y === (ghostHouseY - 3.5)
+      && (position.x > (ghostHouseX - 0.1) && position.x < (ghostHouseX + 0.1))
     );
   }
 
@@ -536,8 +541,8 @@ class Ghost {
   enteredGhostHouse(mode, position) {
     return (
       mode === 'eyes'
-      && position.x === 13.5
-      && (position.y > 13.8 && position.y < 14.2)
+      && position.x === ghostHouseX
+      && (position.y > (ghostHouseY + 0.3) && position.y < (ghostHouseY + 0.7))
     );
   }
 
@@ -550,8 +555,8 @@ class Ghost {
   leavingGhostHouse(mode, position) {
     return (
       mode !== 'eyes'
-      && position.x === 13.5
-      && (position.y > 10.8 && position.y < 11)
+      && position.x === ghostHouseX
+      && (position.y > (ghostHouseY - 2.8) && position.y < (ghostHouseY + 2.5))
     );
   }
 
@@ -565,7 +570,7 @@ class Ghost {
 
     if (this.enteringGhostHouse(this.mode, gridPosition)) {
       this.direction = this.characterUtil.directions.down;
-      gridPositionCopy.x = 13.5;
+      gridPositionCopy.x = ghostHouseX;
       this.position = this.characterUtil.snapToGrid(
         gridPositionCopy, this.direction, this.scaledTileSize,
       );
@@ -573,7 +578,7 @@ class Ghost {
 
     if (this.enteredGhostHouse(this.mode, gridPosition)) {
       this.direction = this.characterUtil.directions.up;
-      gridPositionCopy.y = 14;
+      gridPositionCopy.y = (ghostHouseY + 0.5);
       this.position = this.characterUtil.snapToGrid(
         gridPositionCopy, this.direction, this.scaledTileSize,
       );
@@ -582,7 +587,7 @@ class Ghost {
     }
 
     if (this.leavingGhostHouse(this.mode, gridPosition)) {
-      gridPositionCopy.y = 11;
+      gridPositionCopy.y = (ghostHouseY - 2.5);
       this.position = this.characterUtil.snapToGrid(
         gridPositionCopy, this.direction, this.scaledTileSize,
       );
@@ -1108,6 +1113,39 @@ class Pacman {
 }
 
 
+
+const maze =
+`
+╔══════════════════╗╔═════════════════════════╗╔════════════╗
+║··················║║·························║║············║
+║O╭─╮·╭╮·╭────╮·╭╮·║║·╭──╮·╭╮·╭─╮·╭╮·╭───╮·╭╮·╚╝·╭───╮·╭──╮O║
+║·╰─╯·││·╰─╮╭─╯·││·╚╝·│╭─╯·││·╰─╯·││·│***│·││····│╭──╯·╰──╯·║
+║·····││···││···││····││···││··O··││·│╭──╯·│╰╮·╭─╯│·········║
+║·╭─╮·│╰─╮·││·╭─╯╰─╮·╭╯│·╭─╯╰─╮·╭─╯│·││····╰─╯·╰╮╭╯·╭╮·╭─╮·╔╝
+║·╰─╯·╰──╯·╰╯·╰────╯·╰─╯·╰────╯·╰──╯·╰╯·╭╮······││··││·│*│·║*
+║·······································│╰─╮·╭╮·││·╭╯│·╰─╯·║*
+║·╭─╮·╭──────────╮·╭╮·╭───╮·╭────────╮ ╭╯**│·││·││·│*│·····║*
+║·╰─╯·╰──────────╯·││·╰──╮│·╰────────╯ ╰───╯·╰╯·╰╯·╰─╯·╭╮·╔╝*
+║··················││····││                ············╰╯·║**
+╚═══╗·╭─────╮·╭────╯│·╭╮·││╭╮ ╭─────╮*╭╮ ╭─────╮·╭───╮····║**
+****║·│*╭─╮*│ │*****│·││·││││ │╭────╯*││ ╰────╮│·│╭──╯·╔══╝**
+════╝·│*╰─╯*│·│*╭─╮*│·││·││││ ││******││      ││·││····╚═════
+     ·│╭────╯·│*│ │*│·││·╰╯││ ││******││ ╭────╯│·││·  ·      
+════╗·││O·····│*╰─╯*│·││··O││ ││******╰╯ │*╭─╮*│·││·╭╮·╔═════
+****║·│╰────╮·│*****│·│╰───╯│ │╰────╮*╭╮ │*╰─╯*│·││·││·╚═══╗*
+╔═══╝·╰─────╯·╰─────╯·╰─────╯ ╰─────╯*╰╯ ╰─────╯·╰╯·╰╯·····║*
+║··············╭────╮······                ············╭─╮·║*
+║·╭─╮·╭╮·╭╮·╭╮·╰─╮╭─╯·╭╮·╭───────╮·╭───────╮·╭╮·╭╮·╭─╮·│*│·║*
+║·│*│·││·││·││···││···││·╰──╮****│·╰───╮╭──╯·││·││·│*│·│*│·║*
+║·╰─╯·││·││·│╰─╮·││·╭─╯│····│****│·····││····││·╰╯·╰╮│·╰─╯·╚╗
+║·····││·╰╯·╰──╯·╰╯·╰──╯·╭╮·╰────╯·╭─╮·││·╭──╯│·····││······║
+║·╭─╮·││·················││········│*│·││·╰───╯·╭─╮·│╰╮·╭─╮·║
+║O│*│·│╰─╮·╭────╮·╔╗·╭───╯╰─╮·╔╗·╭─╯*│·││·······│*│·│*│·│*│O║
+║·╰─╯·╰──╯·╰────╯·║║·╰──────╯·║║·╰───╯·╰╯·╔═══╗·╰─╯·╰─╯·╰─╯·║
+║·················║║··········║║··········║***║·············║
+╚═════════════════╝╚══════════╝╚══════════╝***╚═════════════╝
+`.split('\n').filter(l => l.length > 0).join('\n')
+
 class GameCoordinator {
   constructor() {
     this.gameUi = document.getElementById('game-ui');
@@ -1129,39 +1167,10 @@ class GameCoordinator {
     this.bottomRow = document.getElementById('bottom-row');
     this.movementButtons = document.getElementById('movement-buttons');
 
-    this.mazeArray = [
-      ['XXXXXXXXXXXXXXXXXXXXXXXXXXXX'],
-      ['XooooooooooooXXooooooooooooX'],
-      ['XoXXXXoXXXXXoXXoXXXXXoXXXXoX'],
-      ['XOXXXXoXXXXXoXXoXXXXXoXXXXOX'],
-      ['XoXXXXoXXXXXoXXoXXXXXoXXXXoX'],
-      ['XooooooooooooooooooooooooooX'],
-      ['XoXXXXoXXoXXXXXXXXoXXoXXXXoX'],
-      ['XoXXXXoXXoXXXXXXXXoXXoXXXXoX'],
-      ['XooooooXXooooXXooooXXooooooX'],
-      ['XXXXXXoXXXXX XX XXXXXoXXXXXX'],
-      ['XXXXXXoXXXXX XX XXXXXoXXXXXX'],
-      ['XXXXXXoXX          XXoXXXXXX'],
-      ['XXXXXXoXX XXXXXXXX XXoXXXXXX'],
-      ['XXXXXXoXX X      X XXoXXXXXX'],
-      ['      o   X      X   o      '],
-      ['XXXXXXoXX X      X XXoXXXXXX'],
-      ['XXXXXXoXX XXXXXXXX XXoXXXXXX'],
-      ['XXXXXXoXX          XXoXXXXXX'],
-      ['XXXXXXoXX XXXXXXXX XXoXXXXXX'],
-      ['XXXXXXoXX XXXXXXXX XXoXXXXXX'],
-      ['XooooooooooooXXooooooooooooX'],
-      ['XoXXXXoXXXXXoXXoXXXXXoXXXXoX'],
-      ['XoXXXXoXXXXXoXXoXXXXXoXXXXoX'],
-      ['XOooXXooooooo  oooooooXXooOX'],
-      ['XXXoXXoXXoXXXXXXXXoXXoXXoXXX'],
-      ['XXXoXXoXXoXXXXXXXXoXXoXXoXXX'],
-      ['XooooooXXooooXXooooXXooooooX'],
-      ['XoXXXXXXXXXXoXXoXXXXXXXXXXoX'],
-      ['XoXXXXXXXXXXoXXoXXXXXXXXXXoX'],
-      ['XooooooooooooooooooooooooooX'],
-      ['XXXXXXXXXXXXXXXXXXXXXXXXXXXX'],
-    ];
+    this.mazeImg.style = 'display:none';
+    this.maze = maze.replace(/[·O]/g, ' ');
+    this.mazeArray = maze.split('\n').filter(l => l.length > 0)
+      .map(l => [l.replace(/[═║╔╗╚╝─│╰╯╭╮*]/g, 'X').replace(/·/g, 'o')]);
 
     this.maxFps = 120;
     this.tileSize = 8;
@@ -1397,7 +1406,7 @@ class GameCoordinator {
         `${imgBase}text/5000.svg`,
 
         // Maze
-        `${imgBase}maze/maze_blue.svg`,
+        //`${imgBase}maze/maze_blue.svg`,
 
         // Misc
         'app/style/graphics/extra_life.png',
@@ -1630,10 +1639,12 @@ class GameCoordinator {
    */
   drawMaze(mazeArray, entityList) {
     this.pickups = [this.fruit];
+    const hTiles = mazeArray[0].length;
+    const vTiles = mazeArray.length;
 
-    this.mazeDiv.style.height = `${this.scaledTileSize * 31}px`;
-    this.mazeDiv.style.width = `${this.scaledTileSize * 28}px`;
-    this.gameUi.style.width = `${this.scaledTileSize * 28}px`;
+    this.mazeDiv.style.height = `${this.scaledTileSize * vTiles}px`;
+    this.mazeDiv.style.width = `${this.scaledTileSize * hTiles}px`;
+    this.gameUi.style.width = `${this.scaledTileSize * hTiles}px`;
     this.bottomRow.style.minHeight = `${this.scaledTileSize * 2}px`;
     this.dotContainer = document.getElementById('dot-container');
 
@@ -1678,7 +1689,7 @@ class GameCoordinator {
       };
 
       // Set this flag to TRUE to see how two-phase collision detection works!
-      const debugging = false;
+      const debugging = true;
 
       this.pickups.forEach((pickup) => {
         pickup.checkPacmanProximity(maxDistance, pacmanCenter, debugging);
