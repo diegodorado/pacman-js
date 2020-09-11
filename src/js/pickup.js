@@ -90,7 +90,7 @@ class Pickup {
       image = type;
     }
 
-    return `url(static/images/pickups/${image}.svg)`;
+    return `url(/images/pickups/${image}.svg)`;
   }
 
   /**
@@ -198,6 +198,4 @@ class Pickup {
   }
 }
 
-// removeIf(production)
-module.exports = Pickup;
-// endRemoveIf(production)
+export default Pickup

@@ -1,23 +1,21 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src='build/app.js'></script>
     <link rel='shortcut icon' type='image/x-icon' href='favicon.ico'>
+    <link href='src/sass/app.sass' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap' rel='stylesheet'>
-    <link href='https://fonts.googleapis.com/icon?family=Material+Icons'
-      rel='stylesheet'>
     <title>Pacman</title>
   </head>
 
   <body>
     <div id='overflow-mask' class='overflow-mask'>
-      <img id='backdrop' class='backdrop' src='/static/images/backdrop.png'>
+      <img id='backdrop' class='backdrop' src='src/images/backdrop.png'>
 
       <div id='fps-display' class='fps-display'></div>
       <div id='preload-div' class='preload-div'></div>
 
       <div id='main-menu-container' class='main-menu-container'>
-        <img id='logo' class='logo' src='static/images/pacman_logo.png'>
+        <img id='logo' class='logo' src='src/images/pacman_logo.png'>
         <button id='game-start' class='game-start'>
           JUGAR
         </button>
@@ -51,7 +49,6 @@
         </div>
 
         <div id='maze' class='maze'>
-          <img id='maze-img' class='maze-img' src='static/images/maze/maze_blue.svg'>
           <div id='maze-cover' class='maze-cover'></div>
           <div id='dot-container'></div>
           <p id='pacman' class='pacman'></p>
@@ -123,21 +120,11 @@
         </div>
         <div class='body'>
           We were unable to load the images/sounds needed to play the game.</br></br>
-
           This could be due to a poor connection, a strict network policy, or
           by playing on an unsupported browser.
         </div>
       </div>
-
-      <script>
-        window.onload = () => {
-          let gameCoordinator = new GameCoordinator();
-          const txt = document.getElementById('mazetxt')
-          txt.textContent = gameCoordinator.maze
-          txt.style = 'opacity:0.6;position: absolute;white-space: pre;white-space: pre;font-family: monospace;font-weight: bold;color: cyan;line-height: 0.62em;font-size: 1.662em;'
-
-        }
-      </script>
+      <script src='src/js/index.js'></script>
     </div>
   </body>
 </html>

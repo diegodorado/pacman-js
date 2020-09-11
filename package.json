@@ -1,26 +1,21 @@
 {
   "scripts": {
-    "lint": "./node_modules/.bin/eslint .",
-    "dev": "gulp watch",
-    "serve": "node ./node_modules/http-server/bin/http-server"
+    "dev": "parcel index.html",
+    "build": "parcel build index.html"
   },
-  "engines": {
-    "node": ">=12.18.3",
-    "npm": ">=6.14.6"
+  "browserslist": [
+    "last 2 Chrome versions"
+  ],
+  "staticFiles": {
+    "staticPath": [
+      "static",
+      "static"
+    ],
+    "watcherGlob": "**"
   },
   "devDependencies": {
-    "coveralls": "^3.0.3",
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.17.2",
-    "gulp": "^4.0.2",
-    "gulp-concat": "^2.6.1",
-    "gulp-remove-code": "^3.0.4",
-    "gulp-sass": "^4.0.2",
-    "http-server": "^0.12.3",
-    "mocha": "^8.1.2",
-    "nyc": "^14.1.0",
-    "sass": "^1.26.10",
-    "sinon": "^7.3.2"
+    "parcel-bundler": "^1.12.4",
+    "parcel-plugin-static-files-copy": "^2.5.0",
+    "sass": "^1.26.10"
   }
 }
