@@ -178,14 +178,11 @@ class Ghost {
     }
 
     if (mode === 'scared') {
-      this.animationTarget.style.backgroundImage = 'url(app/style/graphics/'
-        + `spriteSheets/characters/ghosts/scared_${this.scaredColor}.svg)`;
+      this.animationTarget.style.backgroundImage = `url(static/images/characters/ghosts/scared_${this.scaredColor}.svg)`;
     } else if (mode === 'eyes') {
-      this.animationTarget.style.backgroundImage = 'url(app/style/graphics/'
-        + `spriteSheets/characters/ghosts/eyes_${direction}.svg)`;
+      this.animationTarget.style.backgroundImage = `url(static/images/characters/ghosts/eyes_${direction}.svg)`;
     } else {
-      this.animationTarget.style.backgroundImage = 'url(app/style/graphics/'
-        + `spriteSheets/characters/ghosts/${name}/${name}_${direction}`
+      this.animationTarget.style.backgroundImage = `url(static/images/characters/ghosts/${name}/${name}_${direction}`
         + `${emotion}.svg)`;
     }
   }
@@ -307,7 +304,6 @@ class Ghost {
   /**
    * Determines Inky's target, which is a mirror image of Blinky's position
    * reflected across a point two tiles in front of Pacman's direction.
-   * Example @ app\style\graphics\spriteSheets\references\inky_target.png
    * @param {({x: number, y: number})} pacmanGridPosition
    * @returns {({x: number, y: number})}
    */

@@ -1,4 +1,5 @@
 
+
 const maze =
 `
 ╔══════════════════╗╔═════════════════════════╗╔════════════╗
@@ -128,7 +129,7 @@ class GameCoordinator {
     const scaledTileSize = this.tileSize * scale;
 
     // The original Pac-Man game leaves 5 tiles of height (3 above, 2 below) surrounding the
-    // maze for the UI. See app\style\graphics\spriteSheets\references\mazeGridSystemReference.png
+    // maze for the UI. See references\mazeGridSystemReference.png
     // for reference.
     const mazeTileHeight = this.mazeArray.length + 5;
     const mazeTileWidth = this.mazeArray[0][0].split('').length;
@@ -205,7 +206,7 @@ class GameCoordinator {
       const loadingPacman = document.getElementById('loading-pacman');
       const loadingDotMask = document.getElementById('loading-dot-mask');
 
-      const imgBase = 'app/style/graphics/spriteSheets/';
+      const imgBase = 'static/images/';
       const imgSources = [
         // Pacman
         `${imgBase}characters/pacman/arrow_down.svg`,
@@ -290,14 +291,11 @@ class GameCoordinator {
         `${imgBase}text/3000.svg`,
         `${imgBase}text/5000.svg`,
 
-        // Maze
-        //`${imgBase}maze/maze_blue.svg`,
-
         // Misc
-        'app/style/graphics/extra_life.png',
+        'static/images/extra_life.png',
       ];
 
-      const audioBase = 'app/style/audio/';
+      const audioBase = 'static/audio/';
       const audioSources = [
         `${audioBase}game_start.mp3`,
         `${audioBase}pause.mp3`,
@@ -643,7 +641,7 @@ class GameCoordinator {
 
     for (let i = 0; i < this.lives; i += 1) {
       const extraLifePic = document.createElement('img');
-      extraLifePic.setAttribute('src', 'app/style/graphics/extra_life.svg');
+      extraLifePic.setAttribute('src', 'static/images/extra_life.svg');
       extraLifePic.style.height = `${this.scaledTileSize * 2}px`;
       this.extraLivesDisplay.appendChild(extraLifePic);
     }
@@ -995,7 +993,7 @@ class GameCoordinator {
     this.removeTimer({ detail: { timer: this.endIdleTimer } });
     this.removeTimer({ detail: { timer: this.ghostFlashTimer } });
 
-    const imgBase = 'app/style//graphics/spriteSheets/maze/';
+    const imgBase = 'static/images';
 
     new Timer(() => {
       this.ghosts.forEach((ghost) => {
@@ -1197,8 +1195,7 @@ class GameCoordinator {
 
     pointsDiv.style.position = 'absolute';
     pointsDiv.style.backgroundSize = `${width}px`;
-    pointsDiv.style.backgroundImage = 'url(app/style/graphics/'
-        + `spriteSheets/text/${amount}.svg`;
+    pointsDiv.style.backgroundImage = `url(static/images/text/${amount}.svg`;
     pointsDiv.style.width = `${width}px`;
     pointsDiv.style.height = `${height || width}px`;
     pointsDiv.style.top = `${position.top}px`;

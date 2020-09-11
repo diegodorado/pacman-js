@@ -90,7 +90,7 @@ class Pickup {
       image = type;
     }
 
-    return `url(app/style/graphics/spriteSheets/pickups/${image}.svg)`;
+    return `url(static/images/pickups/${image}.svg)`;
   }
 
   /**

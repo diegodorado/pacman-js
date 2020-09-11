@@ -11,7 +11,7 @@ function styles() {
 }
 
 function scripts() {
-  return gulp.src('app/scripts/**/*.js')
+  return gulp.src('src/js/**/*.js')
     .pipe(removeCode({ production: true }))
     .pipe(concat('app.js'))
     .pipe(gulp.dest('build'));
@@ -19,7 +19,7 @@ function scripts() {
 
 function watch() {
   gulp.watch('app/style/**/*.scss', styles);
-  gulp.watch('app/scripts/**/*.js', scripts);
+  gulp.watch('src/js/**/*.js', scripts);
 }
 
 const build = gulp.parallel(styles, scripts);
