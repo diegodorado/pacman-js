@@ -12,8 +12,28 @@ $transparent-gray: rgba(255, 255, 255, 0.25)
 $white: #fff
 $yellow: #ffdf00
 
+@font-face
+  font-family: 'kreative_square'
+  src: url('/static/fonts/kreativesquare.woff2') format("woff2"), url('/static/fonts/kreativesquare.woff') format("woff")
+  font-weight: normal
+  font-style: normal
+
 *
   font-family: 'Press Start 2P', sans-serif
+
+#mazetxt, #mazetxt2
+  position: absolute
+  white-space: pre
+  font-size: 1em
+  line-height: 1em
+  font-family: kreative_square
+
+#mazetxt
+  opacity: 0.6
+  color: #0085bf
+
+#mazetxt2
+  color: #009ee3
 
 body
   margin: 0

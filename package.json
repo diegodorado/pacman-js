@@ -17,5 +17,8 @@
     "parcel-bundler": "^1.12.4",
     "parcel-plugin-static-files-copy": "^2.5.0",
     "sass": "^1.26.10"
+  },
+  "dependencies": {
+    "pnglib-es6": "^1.0.1"
   }
 }

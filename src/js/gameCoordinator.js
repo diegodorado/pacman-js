@@ -22,8 +22,8 @@ const maze =
 ╚═══╗·╭─────╮·╭────╯│·╭╮·││╭╮ ╭─────╮*╭╮ ╭─────╮·╭───╮····║**
 ****║·│*╭─╮*│ │*****│·││·││││ │╭────╯*││ ╰────╮│·│╭──╯·╔══╝**
 ════╝·│*╰─╯*│·│*╭─╮*│·││·││││ ││******││      ││·││····╚═════
-     ·│╭────╯·│*│ │*│·││·╰╯││ ││******││ ╭────╯│·││·  ·      
-════╗·││O·····│*╰─╯*│·││··O││ ││******╰╯ │*╭─╮*│·││·╭╮·╔═════
+     ·│╭────╯·│*│ │*│·││·╰╯││ ││******││ ╭────╯│·││·╭╮·      
+════╗·││O·····│*╰─╯*│·││··O││ ││******╰╯ │*╭─╮*│·││·││·╔═════
 ****║·│╰────╮·│*****│·│╰───╯│ │╰────╮*╭╮ │*╰─╯*│·││·││·╚═══╗*
 ╔═══╝·╰─────╯·╰─────╯·╰─────╯ ╰─────╯*╰╯ ╰─────╯·╰╯·╰╯·····║*
 ║··············╭────╮······                ············╭─╮·║*
@@ -58,7 +58,7 @@ class GameCoordinator {
     this.bottomRow = document.getElementById('bottom-row');
     this.movementButtons = document.getElementById('movement-buttons');
 
-    this.maze = maze.replace(/[·O]/g, ' ');
+    this.maze = maze.replace(/[·O\*]/g, ' ');
     this.mazeArray = maze.split('\n').filter(l => l.length > 0)
       .map(l => [l.replace(/[═║╔╗╚╝─│╰╯╭╮*]/g, 'X').replace(/·/g, 'o')]);
 
@@ -569,7 +569,7 @@ class GameCoordinator {
       };
 
       // Set this flag to TRUE to see how two-phase collision detection works!
-      const debugging = true;
+      const debugging = false;
 
       this.pickups.forEach((pickup) => {
         pickup.checkPacmanProximity(maxDistance, pacmanCenter, debugging);
