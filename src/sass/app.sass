@@ -1,15 +1,13 @@
 // Animations
 $generic-duration: 0.5s
-$loading-pacman-duration: 1s
 
 // Colors
 $black: #000
-$blue: #2121ff
-$logo-black: #231f20
-$logo-red: #ee2a29
-$logo-yellow: #fcc73f
+$blue: #009fe3
+$black: #231f20
 $transparent-gray: rgba(255, 255, 255, 0.25)
 $white: #fff
+$blue: #009fe3
 $yellow: #ffdf00
 
 @font-face
@@ -22,6 +20,7 @@ $yellow: #ffdf00
   font-family: 'Press Start 2P', sans-serif
 
 #mazetxt, #mazetxt2
+  user-select: none
   position: absolute
   white-space: pre
   font-size: 1em
@@ -75,6 +74,7 @@ body
   z-index: 2
 
   button
+    -webkit-tap-highlight-color: transparent
     background: none
     border: 0
     color: $white
@@ -154,7 +154,7 @@ body
     height: 66%
 
 .loading-cover
-  background: $yellow
+  background: $blue
   height: 100vh
   position: absolute
   top: 0
@@ -182,132 +182,107 @@ body
   width: 100%
   z-index: 5
 
-.logo
-  height: 200px
-  margin-top: 25vh
-
 .game-start
-  background-color: $logo-yellow
-  border: 5px solid $logo-black
-  border-radius: 10px
-  box-shadow: 5px 5px $logo-red
-  color: $logo-black
+  -webkit-tap-highlight-color: transparent
+  margin-top: 25vh
+  background: none
+  border: 0
   cursor: pointer
-  font-size: 48px
   outline: none
-  padding: 16px
-
-  &:active
-    box-shadow: none
-    transform: translateX(5px) translateY(5px)
-
-  &:disabled
-    cursor: default
+  img
+    width: 50vmin
 
 .loading-container
-  background-color: $black
-  border: 5px solid $blue
-  border-radius: 10px
-  height: 48px
-  left: 50%
-  position: absolute
-  top: 50%
-  transform: translateX(-50%) translateY(-50%)
-  transition: opacity $generic-duration $loading-pacman-duration
-  width: 500px
   z-index: 5
+  display: flex
+  align-items: center
+  justify-content: center
+  width: 100%
+  height: 100%
+  position: fixed
+  transition: opacity 1s linear
 
-.loading-pacman
-  animation: loading-animation 0.3s steps(4) infinite
-  background-color: $black
-  background-image: url("/static/images/characters/pacman/pacman_right.svg")
-  background-size: 192px
-  border-radius: 10px
-  height: 48px
-  position: absolute
-  transition: left $loading-pacman-duration
-  width: 48px
-  z-index: 6
 
-@keyframes loading-animation
+@keyframes ldio-jq78mwhgpl-1
+  0%
+    transform: rotate(0deg)
+  50%
+    transform: rotate(-45deg)
   100%
-    background-position: -192px
+    transform: rotate(0deg)
 
-.loading-dot-mask
-  background-color: $black
-  border-radius: 10px
-  height: 48px
-  left: 0
-  position: absolute
-  top: 0
-  transition: width $loading-pacman-duration
-  z-index: -1
+@keyframes ldio-jq78mwhgpl-2
+  0%
+    transform: rotate(180deg)
+  50%
+    transform: rotate(225deg)
+  100%
+    transform: rotate(180deg)
 
-.loading-dot
-  background-image: url("/static/images/pickups/pacdot.svg")
-  height: 6px
-  position: absolute
-  top: 50%
-  transform: translateY(-50%)
-  width: 6px
-  z-index: -2
+.ldio-jq78mwhgpl > div
+  &:nth-child(2)
+    transform: translate(-15px, 0)
+    div
+      position: absolute
+      top: 40px
+      left: 40px
+      width: 120px
+      height: 60px
+      border-radius: 120px 120px 0 0
+      background: $yellow
+      animation: ldio-jq78mwhgpl-1 1s linear infinite
+      transform-origin: 60px 60px
+      &:nth-child(2)
+        animation: ldio-jq78mwhgpl-2 1s linear infinite
+      &:nth-child(3)
+        transform: rotate(-90deg)
+        animation: none
 
-._5
-  left: 5%
+  &:nth-child(1)
+    display: block
+    div
+      position: absolute
+      top: 92px
+      left: -8px
+      width: 16px
+      height: 16px
+      border-radius: 50%
+      background: #ccc
+      animation: ldio-jq78mwhgpl-3 1s linear infinite
+      &:nth-child(1)
+        animation-delay: -0.67s
+      &:nth-child(2)
+        animation-delay: -0.33s
+      &:nth-child(3)
+        animation-delay: 0s
 
-._10
-  left: 10%
+@keyframes ldio-jq78mwhgpl-3
+  0%
+    transform: translate(190px, 0)
+    opacity: 0
+  20%
+    opacity: 1
+  100%
+    transform: translate(70px, 0)
+    opacity: 1
 
-._15
-  left: 15%
+.loadingio-spinner-bean-eater-s8qpmazz0wp
+  width: 200px
+  height: 200px
+  display: inline-block
+  overflow: hidden
 
-._20
-  left: 20%
+.ldio-jq78mwhgpl
+  width: 100%
+  height: 100%
+  position: relative
+  transform: translateZ(0) scale(1)
+  backface-visibility: hidden
+  transform-origin: 0 0
+  div
+    box-sizing: content-box
 
-._25
-  left: 25%
 
-._30
-  left: 30%
-
-._35
-  left: 35%
-
-._40
-  left: 40%
-
-._45
-  left: 45%
-
-._50
-  left: 50%
-
-._55
-  left: 55%
-
-._60
-  left: 60%
-
-._65
-  left: 65%
-
-._70
-  left: 70%
-
-._75
-  left: 75%
-
-._80
-  left: 80%
-
-._85
-  left: 85%
-
-._90
-  left: 90%
-
-._95
-  left: 95%
 
 .movement-buttons
   align-items: center
@@ -325,6 +300,7 @@ body
     margin-bottom: -3px
 
   button
+    -webkit-tap-highlight-color: transparent
     background: transparent
     border: 3px solid $blue
     border-radius: 5px
@@ -367,7 +343,7 @@ body
     visibility: hidden
 
 .error-message
-  color: $logo-black
+  color: $black
   opacity: 0
   position: absolute
   top: 30vh

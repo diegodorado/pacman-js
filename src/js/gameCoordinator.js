@@ -200,8 +200,6 @@ class GameCoordinator {
   preloadAssets() {
     return new Promise((resolve) => {
       const loadingContainer = document.getElementById('loading-container');
-      const loadingPacman = document.getElementById('loading-pacman');
-      const loadingDotMask = document.getElementById('loading-dot-mask');
 
       const imgBase = '/images/';
       const imgSources = [
@@ -289,7 +287,7 @@ class GameCoordinator {
         `${imgBase}text/5000.svg`,
 
         // Misc
-        '/images/extra_life.png',
+        '/images/extra_life.svg',
       ];
 
       const audioBase = '/audio/';
@@ -312,9 +310,6 @@ class GameCoordinator {
 
       const totalSources = imgSources.length + audioSources.length;
       this.remainingSources = totalSources;
-
-      loadingPacman.style.left = '0';
-      loadingDotMask.style.width = '0';
 
       Promise.all([
         this.createElements(imgSources, 'img', totalSources, this),
@@ -345,11 +340,6 @@ class GameCoordinator {
   createElements(sources, type, totalSources, gameCoord) {
     const loadingContainer = document.getElementById('loading-container');
     const preloadDiv = document.getElementById('preload-div');
-    const loadingPacman = document.getElementById('loading-pacman');
-    const containerWidth = loadingContainer.scrollWidth
-      - loadingPacman.scrollWidth;
-    const loadingDotMask = document.getElementById('loading-dot-mask');
-
     const gameCoordRef = gameCoord;
 
     return new Promise((resolve, reject) => {
@@ -362,10 +352,6 @@ class GameCoordinator {
         const elementReady = () => {
           gameCoordRef.remainingSources -= 1;
           loadedSources += 1;
-          const percent = 1 - gameCoordRef.remainingSources / totalSources;
-          loadingPacman.style.left = `${percent * containerWidth}px`;
-          loadingDotMask.style.width = loadingPacman.style.left;
-
           if (loadedSources === sources.length) {
             resolve();
           }
@@ -590,8 +576,8 @@ class GameCoordinator {
     this.eyeGhosts = 0;
     this.allowPacmanMovement = false;
 
-    const left = this.scaledTileSize * 11;
-    const top = this.scaledTileSize * 16.5;
+    const left = this.scaledTileSize * (11+21)
+    const top = this.scaledTileSize * 17.5;
     const duration = initialStart ? 4500 : 2000;
     const width = this.scaledTileSize * 6;
     const height = this.scaledTileSize * 2;
@@ -807,10 +793,8 @@ class GameCoordinator {
     }
 
     if (e.detail.type === 'fruit') {
-      const left = e.detail.points >= 1000
-        ? this.scaledTileSize * 12.5
-        : this.scaledTileSize * 13;
-      const top = this.scaledTileSize * 16.5;
+      const left = ((e.detail.points >= 1000 ? 12.5 : 13 )+21) * this.scaledTileSize
+      const top = this.scaledTileSize * 17.5;
       const width = e.detail.points >= 1000
         ? this.scaledTileSize * 3
         : this.scaledTileSize * 2;
@@ -885,8 +869,8 @@ class GameCoordinator {
     new Timer(() => {
       this.displayText(
         {
-          left: this.scaledTileSize * 9,
-          top: this.scaledTileSize * 16.5,
+          left: this.scaledTileSize * (21+9),
+          top: this.scaledTileSize * 17.5,
         },
         'game_over',
         4000,
