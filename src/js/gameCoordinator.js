@@ -201,7 +201,7 @@ class GameCoordinator {
     return new Promise((resolve) => {
       const loadingContainer = document.getElementById('loading-container');
 
-      const imgBase = '/images/';
+      const imgBase = './images/';
       const imgSources = [
         // Pacman
         `${imgBase}characters/pacman/arrow_down.svg`,
@@ -287,10 +287,10 @@ class GameCoordinator {
         `${imgBase}text/5000.svg`,
 
         // Misc
-        '/images/extra_life.svg',
+        './images/extra_life.svg',
       ];
 
-      const audioBase = '/audio/';
+      const audioBase = './audio/';
       const audioSources = [
         `${audioBase}game_start.mp3`,
         `${audioBase}pause.mp3`,
@@ -624,7 +624,7 @@ class GameCoordinator {
 
     for (let i = 0; i < this.lives; i += 1) {
       const extraLifePic = document.createElement('img');
-      extraLifePic.setAttribute('src', '/images/extra_life.svg');
+      extraLifePic.setAttribute('src', './images/extra_life.svg');
       extraLifePic.style.height = `${this.scaledTileSize * 2}px`;
       this.extraLivesDisplay.appendChild(extraLifePic);
     }
@@ -974,7 +974,7 @@ class GameCoordinator {
     this.removeTimer({ detail: { timer: this.endIdleTimer } });
     this.removeTimer({ detail: { timer: this.ghostFlashTimer } });
 
-    const imgBase = '/images';
+    const imgBase = './images';
 
     new Timer(() => {
       this.ghosts.forEach((ghost) => {
@@ -1176,7 +1176,7 @@ class GameCoordinator {
 
     pointsDiv.style.position = 'absolute';
     pointsDiv.style.backgroundSize = `${width}px`;
-    pointsDiv.style.backgroundImage = `url(/images/text/${amount}.svg`;
+    pointsDiv.style.backgroundImage = `url(./images/text/${amount}.svg`;
     pointsDiv.style.width = `${width}px`;
     pointsDiv.style.height = `${height || width}px`;
     pointsDiv.style.top = `${position.top}px`;

@@ -18,7 +18,7 @@ class Pacman {
     this.setStyleMeasurements(this.scaledTileSize, this.spriteFrames);
     this.setDefaultPosition(this.scaledTileSize);
     this.setSpriteSheet(this.direction);
-    this.pacmanArrow.style.backgroundImage = `url(/images/characters/pacman/arrow_${this.direction}.svg)`;
+    this.pacmanArrow.style.backgroundImage = `url(./images/characters/pacman/arrow_${this.direction}.svg)`;
   }
 
   /**
@@ -96,7 +96,7 @@ class Pacman {
    * @param {('up'|'down'|'left'|'right')} direction - The character's current travel orientation
    */
   setSpriteSheet(direction) {
-    this.animationTarget.style.backgroundImage = `url(/images/characters/pacman/pacman_${direction}.svg)`;
+    this.animationTarget.style.backgroundImage = `url(./images/characters/pacman/pacman_${direction}.svg)`;
   }
 
   prepDeathAnimation() {
@@ -107,7 +107,7 @@ class Pacman {
     this.backgroundOffsetPixels = 0;
     const bgSize = this.measurement * this.spriteFrames;
     this.animationTarget.style.backgroundSize = `${bgSize}px`;
-    this.animationTarget.style.backgroundImage = 'url(/images/characters/pacman/pacman_death.svg)';
+    this.animationTarget.style.backgroundImage = 'url(./images/characters/pacman/pacman_death.svg)';
     this.animationTarget.style.backgroundPosition = '0px 0px';
     this.pacmanArrow.style.backgroundImage = '';
   }
@@ -119,7 +119,7 @@ class Pacman {
    */
   changeDirection(newDirection, startMoving) {
     this.desiredDirection = newDirection;
-    this.pacmanArrow.style.backgroundImage = `url(/images/characters/pacman/arrow_${this.desiredDirection}.svg)`;
+    this.pacmanArrow.style.backgroundImage = `url(./images/characters/pacman/arrow_${this.desiredDirection}.svg)`;
 
     if (startMoving) {
       this.moving = true;

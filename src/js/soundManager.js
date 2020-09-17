@@ -1,6 +1,6 @@
 class SoundManager {
   constructor() {
-    this.baseUrl = '/audio/';
+    this.baseUrl = './audio/';
     this.fileFormat = 'mp3';
     this.masterVolume = 1;
     this.paused = false;

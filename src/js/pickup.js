@@ -90,7 +90,7 @@ class Pickup {
       image = type;
     }
 
-    return `url(/images/pickups/${image}.svg)`;
+    return `url(./images/pickups/${image}.svg)`;
   }
 
   /**
