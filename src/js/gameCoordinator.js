@@ -115,11 +115,11 @@ class GameCoordinator {
    * @param {Number} scale
    */
   determineScale(scale) {
-    const availableScreenHeight = Math.min(
+    const availableScreenHeight = Math.max(
       document.documentElement.clientHeight,
       window.innerHeight || 0,
     );
-    const availableScreenWidth = Math.min(
+    const availableScreenWidth = Math.max(
       document.documentElement.clientWidth,
       window.innerWidth || 0,
     );
@@ -137,6 +137,7 @@ class GameCoordinator {
     ) {
       return this.determineScale(scale + 1);
     }
+    console.log(scale,  window.innerWidth, window.innerHeight, document.documentElement.clientWidth,document.documentElement.clientHeight)
 
     return scale - 1;
   }
